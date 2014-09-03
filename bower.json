@@ -1,0 +1,18 @@
+{
+    "name": "modulex-url",
+    "author": "yiminghe <yiminghe@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/kissyteam/url.git"
+    },
+    "dependencies": {
+        "modulex": "modulex#master",
+        "querystring": "modulex-querystring#master",
+        "path": "modulex-path#master"
+    },
+    "ignore": [
+        "**/*",
+        "!build/**/*"
+    ]
+}
