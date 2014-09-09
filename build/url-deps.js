@@ -1,1 +1,1 @@
-modulex.config("requires",{"url":["querystring","path"]});
+modulex.config("requires",{"url":["modulex-querystring","modulex-path"]});
