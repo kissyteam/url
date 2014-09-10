@@ -59,7 +59,6 @@
     "browser-test-build": "mocha-phantomjs http://localhost:8007/tests/runner.html?build",
     "browser-test-cover": "mocha-phantomjs -R node_modules/node-jscover/lib/reporters/mocha/console http://localhost:8007/tests/runner.html?coverage"
   },
-  "private": true,
   "dependencies": {
     "modulex-path": "^1.0.0",
     "modulex-querystring": "^1.0.0"
