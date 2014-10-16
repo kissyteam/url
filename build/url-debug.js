@@ -1,4 +1,9 @@
 /*
+Copyright 2014, modulex-url@1.0.3
+MIT Licensed
+build time: Thu, 16 Oct 2014 03:43:03 GMT
+*/
+/*
 combined modules:
 url
 */
@@ -103,6 +108,8 @@ function encodeSpecialChars(str, specialCharsReg) {
 }
 
 var url = {
+    version: '1.0.3',
+    
     /**
      * parse a url to a structured object
      * @param {String} str url string
