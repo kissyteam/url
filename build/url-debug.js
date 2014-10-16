@@ -1,7 +1,7 @@
 /*
-Copyright 2014, modulex-url@1.0.3
+Copyright 2014, modulex-url@1.0.4
 MIT Licensed
-build time: Thu, 16 Oct 2014 03:43:03 GMT
+build time: Thu, 16 Oct 2014 03:50:46 GMT
 */
 /*
 combined modules:
@@ -108,7 +108,7 @@ function encodeSpecialChars(str, specialCharsReg) {
 }
 
 var url = {
-    version: '1.0.3',
+    version: '1.0.4',
     
     /**
      * parse a url to a structured object
