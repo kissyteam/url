@@ -8,8 +8,8 @@
     },
     "dependencies": {
         "modulex": "*",
-        "querystring": "modulex-querystring#1.x",
-        "path": "modulex-path#1.x"
+        "modulex-querystring": "1.x",
+        "modulex-path": "1.x"
     },
     "ignore": [
         "**/*",
