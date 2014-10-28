@@ -7,9 +7,11 @@
         "url": "http://github.com/kissyteam/url.git"
     },
     "dependencies": {
-        "modulex": "*",
         "modulex-querystring": "1.x",
         "modulex-path": "1.x"
+    },
+    "devDependencies": {
+        "modulex": "*"
     },
     "ignore": [
         "**/*",
