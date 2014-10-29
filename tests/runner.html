@@ -8,12 +8,11 @@
 <h1 style="text-align: center">url tests</h1>
 
 <div id='mocha'></div>
-<script src="/bower_components/modulex/build/modulex-debug.js"></script>
+<script src="/mx_modules/modulex-debug.js"></script>
+<script src="/mx_modules/ua-debug.js"></script>
+<script src="/mx_modules/feature-debug.js"></script>
+<script src="/mx_modules/meta.js"></script>
 <script src="/meta/alias.js"></script>
-<script src="/bower_components/path/build/path-debug.js"></script>
-<script src="/bower_components/path/meta/alias.js"></script>
-<script src="/bower_components/querystring/build/querystring-debug.js"></script>
-<script src="/bower_components/querystring/meta/alias.js"></script>
 
 <script src="/node_modules/node-jscover/lib/front-end/header.js"></script>
 <script src="/node_modules/node-jscover/lib/front-end/jscoverage-branch.js"></script>
@@ -38,7 +37,8 @@
                 specs: {
                     base: '/tests/specs'
                 }
-            }
+            },
+            base:'/mx_modules'
         });
 
         modulex.config({

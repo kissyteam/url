@@ -8,6 +8,7 @@ before_script:
 - node server &
 - npm install gulp bower mocha-phantomjs -g
 - bower install
+- gulp mx
 - phantomjs --version
 script:
 - npm run-script browser-test

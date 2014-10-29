@@ -24,6 +24,7 @@
     ]
   },
   "devDependencies": {
+    "aggregate-bower": "^1.0.10",
     "body-parser": "^1.6.5",
     "chai": "^1.9.1",
     "express": "^4.8.5",
@@ -40,6 +41,7 @@
     "gulp-replace": "^0.4.0",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
+    "gulp-wrapper": "^0.1.5",
     "jshint": "^2.5.5",
     "jshint-stylish": "^0.4.0",
     "mocha": "^1.21.4",
@@ -48,7 +50,6 @@
     "node-jscover-handler": "^1.0.3",
     "precommit-hook": "^1.0.7",
     "serve-index": "^1.1.6",
-    "gulp-wrapper": "^0.1.5",
     "serve-static": "^1.5.3"
   },
   "precommit": [

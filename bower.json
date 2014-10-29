@@ -11,7 +11,9 @@
         "modulex-path": "1.x"
     },
     "devDependencies": {
-        "modulex": "*"
+        "modulex": "*",
+        "modulex-ua": "1.x",
+        "modulex-feature": "1.x"
     },
     "ignore": [
         "**/*",
