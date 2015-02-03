@@ -1,19 +1,19 @@
 /*
-Copyright 2014, modulex-url@1.0.4
+Copyright 2015, modulex-url@1.0.4
 MIT Licensed
-build time: Thu, 16 Oct 2014 03:50:46 GMT
+build time: Fri, 30 Jan 2015 08:31:03 GMT
 */
 /*
 combined modules:
 url
 */
-modulex.add("url", ["modulex-querystring","modulex-path"], function(require, exports, module) {/**
+modulex.add("url", ["util","modulex-path"], function(require, exports, module) {/**
  * @ignore
  * url utilities
  * @author yiminghe@gmail.com
  */
-var querystring = require('modulex-querystring');
 var undef;
+var util = require('util');
 var Path = require('modulex-path');
 var reDisallowedInProtocolOrAuth = /[#\/\?@]/g,
     reDisallowedInPathName = /[#\?]/g,
@@ -113,17 +113,22 @@ var url = {
     /**
      * parse a url to a structured object
      * @param {String} str url string
-     * @param {Boolean} [parseQueryString] whether parse query string to structured object
+	 * @param { String | Object } base url
      * @return {Object}
      */
-    parse: function (str, parseQueryString) {
+    parse: function (str, base) {
+
+		if (base) {
+			str = url.resolve('string' === typeof base ? base : url.format(base), str);
+		}
+
         var m = str.match(URI_SPLIT_REG) || [],
             ret = {};
 
         // old ie 7:  return "" for unmatched regexp ...
 
         for (var part in REG_INFO) {
-            ret[part] = m[REG_INFO[part]];
+            ret[part] = m[REG_INFO[part]] || ''; // default ''
         }
 
         if (ret.protocol) {
@@ -144,7 +149,7 @@ var url = {
         if (protocol && !needDoubleSlash(protocol.slice(0, -1))) {
             if (!ret.slashes) {
                 str = str.slice(0, protocol.length) + '//' + str.slice(protocol.length);
-                ret = url.parse(str, parseQueryString);
+                ret = url.parse(str);
                 ret.slashes = null;
                 return ret;
             }
@@ -156,20 +161,30 @@ var url = {
             }
         }
 
-        ret.path = ret.pathname;
-        if (ret.search) {
-            ret.path += ret.search;
-        }
+//        ret.path = ret.pathname;
+//        if (ret.search) {
+//            ret.path += ret.search;
+//        }
         ret.host = ret.hostname;
         if (ret.port) {
             ret.host = ret.hostname + ':' + ret.port;
         }
-        if (ret.search) {
-            ret.query = ret.search.substring(1);
-        }
-        if (parseQueryString && ret.query) {
-            ret.query = querystring.parse(ret.query);
-        }
+		// userinfo
+		ret.username = '';
+		ret.password = '';
+		if (ret.auth) {
+			var userinfo = ret.auth.split('@');
+			ret.username = userinfo[0] || '';
+			ret.password = userinfo[1] || '';
+			// rm auth, not standard
+		}
+		delete ret.auth;
+//        if (ret.search) {
+//            ret.query = ret.search.substring(1);
+//        }
+//        if (parseQueryString && ret.query) {
+//            ret.query = querystring.parse(ret.query);
+//        }
         ret.href = url.format(ret);
         return ret;
     },
@@ -177,9 +192,8 @@ var url = {
     /**
      * Take a parsed URL object, and return a formatted URL string.
      * @param {Object} url parsed from url.parse
-     * @param {Boolean} [serializeArray=true] whether add '[]' to array key of query data
      */
-    format: function (url, serializeArray) {
+    format: function (url) {
         var host = url.host;
         if (host === undef && url.hostname) {
             host = encodeURIComponent(url.hostname);
@@ -189,34 +203,34 @@ var url = {
         }
 
         var search = url.search;
-        var query = url.query;
-        if (search === undef && query !== undef) {
-            if (typeof query !== 'string') {
-                query = querystring.stringify(query, undef, undef, serializeArray);
-            }
-            if (query) {
-                search = '?' + query;
-            }
-        }
-
-        if (search && search.charAt(0) !== '?') {
-            search = '?' + search;
-        }
+//        var query = url.query;
+//        if (search === undef && query !== undef) {
+//            if (typeof query !== 'string') {
+//                query = querystring.stringify(query, undef, undef, serializeArray);
+//            }
+//            if (query) {
+//                search = '?' + query;
+//            }
+//        }
+//
+//        if (search && search.charAt(0) !== '?') {
+//            search = '?' + search;
+//        }
 
         var hash = url.hash || '';
-        if (hash && hash.charAt(0) !== '#') {
-            hash = '#' + hash;
-        }
+//        if (hash && hash.charAt(0) !== '#') {
+//            hash = '#' + hash;
+//        }
 
         var pathname = url.pathname || '';
 
         var out = [],
-            protocol, auth;
+            protocol;
 
         if ((protocol = url.protocol)) {
-            if (protocol.slice(0 - 1) !== ':') {
-                protocol += ':';
-            }
+//            if (protocol.slice(0 - 1) !== ':') {
+//                protocol += ':';
+//            }
 
             out.push(encodeSpecialChars(protocol, reDisallowedInProtocolOrAuth));
         }
@@ -225,8 +239,8 @@ var url = {
             if (this.slashes || protocol && needDoubleSlash(protocol)) {
                 out.push('//');
             }
-            if ((auth = url.auth)) {
-                out.push(encodeSpecialChars(auth, reDisallowedInProtocolOrAuth));
+            if (url.username) {
+                out.push(encodeSpecialChars([url.username, url.password || ''].join(':'), reDisallowedInProtocolOrAuth));
                 out.push('@');
             }
             out.push(host);
@@ -307,15 +321,37 @@ var url = {
     }
 };
 
-url.stringify = url.format;
+// URL constructory
 
-module.exports = url;
+//url.stringify = url.format;
+
+// constructor
+function _URL(str, base) {
+	if (this instanceof _URL) {
+		util.mix(this, url.parse(str, base));
+		return this;
+	}
+	throw new Error('Failed to construct \'URL\': Please use the \'new\' operator');
+}
+
+// prototype
+_URL.prototype.toString = function() {
+	return url.format(this);
+};
+
+// static method
+_URL.resolve = url.resolve;
+
+module.exports = _URL;
+
 /*
  Refer
  - application/x-www-form-urlencoded
  - http://www.ietf.org/rfc/rfc3986.txt
  - http://en.wikipedia.org/wiki/URI_scheme
+ - https://url.spec.whatwg.org/
  - http://unixpapa.com/js/querystring.html
  - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
  - same origin: http://tools.ietf.org/html/rfc6454
- */});
+ */
+});

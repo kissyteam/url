@@ -1,6 +1,6 @@
 /*
-Copyright 2014, modulex-url@1.0.4
+Copyright 2015, modulex-url@1.0.4
 MIT Licensed
-build time: Thu, 16 Oct 2014 03:50:46 GMT
+build time: Fri, 30 Jan 2015 08:31:03 GMT
 */
-modulex.config("requires",{"url":["modulex-querystring","modulex-path"]});
+modulex.config("requires",{"url":["util","modulex-path"]});
