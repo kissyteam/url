@@ -1,8 +1,4 @@
-/*
-Copyright 2015, modulex-url@1.0.4
-MIT Licensed
-build time: Fri, 30 Jan 2015 08:31:03 GMT
-*/
+//! Copyright 2015, kissy-url@1.0.4 MIT Licensed, build time: Thu, 05 Feb 2015 06:56:34 GMT 
 /*
 combined modules:
 url
