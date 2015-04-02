@@ -1,4 +1,4 @@
-//! Copyright 2015, kissy-url@1.0.4 MIT Licensed, build time: Thu, 05 Feb 2015 06:56:34 GMT 
+//! Copyright 2015, kissy-url@1.0.4 MIT Licensed, build time: Thu, 02 Apr 2015 10:56:30 GMT 
 /*
 combined modules:
 url
@@ -319,8 +319,6 @@ var url = {
 
 // URL constructory
 
-//url.stringify = url.format;
-
 // constructor
 function _URL(str, base) {
 	if (this instanceof _URL) {
@@ -337,6 +335,7 @@ _URL.prototype.toString = function() {
 
 // static method
 _URL.resolve = url.resolve;
+_URL.stringify = url.format;
 
 module.exports = _URL;
 
